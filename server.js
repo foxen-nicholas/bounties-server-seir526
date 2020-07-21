@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const db = require('./models')
 
 // Middleware goes here
 app.use(express.urlencoded({ extended: false }))
@@ -8,6 +9,18 @@ app.use(express.urlencoded({ extended: false }))
 app.get('/', (req, res) => {
   res.send('Nothing to see here, move along human')
 })
+
+app.use('/v1/bounties', require('./routes/v1/bounties'))
+
+// TODO: Delete test route
+// app.get('/test', (req, res) => {
+//   db.Bounty.find()
+//     .then(bounties => res.send(bounties))
+//     .catch(err => {
+//       console.error(err)
+//       res.send({ message: 'Server Error' })
+//     })
+// })
 
 // LISTEN
 app.listen(process.env.PORT || 3000, () => {
